@@ -4,6 +4,6 @@
 
 作業網站: 請填入此網站的網址
 
-作業倉儲:(https://github.com/mdecad2024/hw-41223158/hw-mdecycu
+作業倉儲:(https://github.com/mdecad2024/hw-mdecycu
 
 其他資訊: 請自行填入其他相關資料
