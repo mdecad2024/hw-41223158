@@ -2,7 +2,7 @@
 
 使用者: 41223158
 
-作業網站:https://mdecad41223158.github.io/hw-41223158/
+作業網站:(https://automatic-journey-x5grjjx4jgwc6vrj-8081.app.github.dev/)
 
 作業倉儲:(https://github.com/mdecad2024/hw-41223158)
 
