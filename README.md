@@ -2,7 +2,7 @@
 
 使用者: hw-41223158
 
-作業網站:https://mdecad2024.github.io/41223158
+作業網站:https://mdecad2024.github.io/hw-41223158
 
 作業倉儲:https://github.com/mdecad2024/41223158
 
