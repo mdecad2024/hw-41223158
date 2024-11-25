@@ -148,11 +148,14 @@ img.add_border {
 <p><img alt="" height="276" src="./../images/螢幕擷取畫面 2024-11-24 195955.png" width="490"/></p>
 <p><img alt="" height="275" src="./../images/螢幕擷取畫面 2024-11-24 184718.png" width="488"/></p>
 <p><img alt="" height="275" src="./../images/螢幕擷取畫面 2024-11-24 184556.png" width="487"/></p>
+<p><img alt="" height="274" src="./../images/螢幕擷取畫面 2024-11-24 184718.png" width="486"/></p>
+<p><img alt="" height="238" src="./../images/solvespace_3EXF6p967n.png" width="485"/></p>
+<p><img alt="" height="273" src="./../images/螢幕擷取畫面 2024-11-25 235007.png" width="484"/></p>
 <p>
 <script src="./../cmsimde/static/jsc3d.js" type="text/javascript"></script>
 </p>
-<div id="models"><canvas height="300" id="cv1" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv2" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv3" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv4" style="border: 1px solid;" width="400"></canvas><canvas height="300" id="cv5" style="border: 1px solid;" width="400"></canvas><!-- 可以添加更多的 canvas --></div>
-<div style="width: 400px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode: type="color"&gt; Back Color3:<input id="bckClr3" onchange="changeOption('BackgroundColor3',this.value)" type="color"/><br/> Render Mode: type="color"&gt; Back Color4:<input id="bckClr4" onchange="changeOption('BackgroundColor4',this.value)" type="color"/><br/> Render Mode: type="color"&gt; Back Color5:<input id="bckClr5" onchange="changeOption('BackgroundColor5',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
+<div id="models"><canvas height="300" id="cv1" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv2" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv3" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv4" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv5" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv6" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv7" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv8" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv9" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv10" style="border: 1px solid;" width="400"></canvas></div>
+<div style="width: 400px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
 <option>Flat</option>
 <option>Point</option>
 <option>Wireframe</option>
@@ -170,12 +173,9 @@ function getOptions(){
     var mc = document.getElementById("mdlClr").value;
     var bc1 = document.getElementById("bckClr1").value;
     var bc2 = document.getElementById("bckClr2").value;
-    var bc3 = document.getElementById("bckClr3").value;
-    var bc4 = document.getElementById("bckClr4").value;
-    var bc5 = document.getElementById("bckClr5").value;
     var ren = document.getElementById("render").value;
     var def = document.getElementById("defini").value;
-    return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, BackgroundColor3: bc3, BackgroundColor4: bc4, BackgroundColor5: bc5,RenderMode: ren, Definition: def};
+    return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, RenderMode: ren, Definition: def};
 }
 
 function readSTLfile(opt, canvasId){
@@ -188,9 +188,6 @@ function readSTLfile(opt, canvasId){
     viewer.setParameter('ModelColor', opt.ModelColor);
     viewer.setParameter('BackgroundColor1', opt.BackgroundColor1);
     viewer.setParameter('BackgroundColor2', opt.BackgroundColor2);
-    viewer.setParameter('BackgroundColor3', opt.BackgroundColor3);
-    viewer.setParameter('BackgroundColor4', opt.BackgroundColor4);
-    viewer.setParameter('BackgroundColor5', opt.BackgroundColor5);
     viewer.setParameter('RenderMode', opt.RenderMode);
     viewer.setParameter('Definition', opt.Definition);
     viewer.init();
@@ -198,7 +195,7 @@ function readSTLfile(opt, canvasId){
     viewers.push(viewer); // 保存 viewer 實例
 }
 
-function changeOption(strOpt,strValue){
+function changeOption(strOpt, strValue){
     console.log("change " + strOpt + " to " + strValue);
     viewers.forEach(viewer => {
         viewer.setParameter(strOpt, strValue);
@@ -211,12 +208,17 @@ function openByUrl(){
     var url = document.getElementById("url").value;
     var opt = getOptions();
     opt.SceneUrl = url;
-    // 可以添加更多的 STL URL
-    readSTLfile(opt, 'cv1'); // 為每個 canvas 調用
-    readSTLfile(opt, 'cv2'); // 第二個 canvas
-    readSTLfile(opt, 'cv3'); // 第三個 canvas
-    readSTLfile(opt, 'cv4'); // 第四個 canvas
-    readSTLfile(opt, 'cv5'); // 第五個 canvas
+    // 為每個 canvas 調用
+    readSTLfile(opt, 'cv1');
+    readSTLfile(opt, 'cv2');
+    readSTLfile(opt, 'cv3');
+    readSTLfile(opt, 'cv4');
+    readSTLfile(opt, 'cv5');
+    readSTLfile(opt, 'cv6');
+    readSTLfile(opt, 'cv7');
+    readSTLfile(opt, 'cv8');
+    readSTLfile(opt, 'cv9');
+    readSTLfile(opt, 'cv10');
 }
 
 function openByGet(){
@@ -225,7 +227,12 @@ function openByGet(){
         "https://s104.cycu.org/~41223158/41223158_lesson2_solvespace.stl",
         "https://s104.cycu.org/~41223158/1234_lesson3_solvespace.stl",
         "https://s104.cycu.org/~41223158/123_lesson4_solvespace.stl",
-        "https://s104.cycu.org/~41223158/1357_lesson5_solvespace.stl"
+        "https://s104.cycu.org/~41223158/1357_lesson5_solvespace.stl",
+        "https://s104.cycu.org/~41223158/123456_lesson6_solvespace.stl",
+        "https://s104.cycu.org/~41223158/7_lesson7_solvespace.stl",
+        "https://s104.cycu.org/~41223158/8_lesson8_solvespace.stl",
+        "https://s104.cycu.org/~41223158/9_lesson9_solvespace.stl",
+        "https://s104.cycu.org/~41223158/10_lesson10_solvespace.stl"
     ];
     var opt = getOptions();
     urls.forEach((url, index) => {
