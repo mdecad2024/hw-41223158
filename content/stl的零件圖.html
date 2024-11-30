@@ -141,9 +141,113 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">w9 << <a href='w9.html'>Previous</a> <a href='w11_hw.html'>Next</a> >> w11_hw<br /><h1>w10</h1>
-<p><span>(在w10課堂小考內容放在練習影片，只有放置了在課程時間內所完成進度，其餘內容及完整影片皆放置在另一頁面。)</span></p>
-<br />w9 << <a href='w9.html'>Previous</a> <a href='w11_hw.html'>Next</a> >> w11_hw</div>
+    <div id="tipue_search_content">w7 << <a href='w7.html'>Previous</a> <a href='HW3.html'>Next</a> >> HW3<br /><h1>stl的零件圖</h1>
+<p><span></span></p>
+<p>
+<script src="./../cmsimde/static/jsc3d.js" type="text/javascript"></script>
+</p>
+<div id="models"></div>
+<p><!-- 用来动态加载 canvas 的容器 --></p>
+<div style="width: 400px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
+<option>Flat</option>
+<option>Point</option>
+<option>Wireframe</option>
+<option>Smooth</option>
+</select>Definition:<select id="defini" onchange="changeOption('Definition',this.value)">
+<option>Standard</option>
+<option>low</option>
+<option>high</option>
+</select></div>
+<p>
+<script type="text/javascript">
+var viewers = [];
+
+// 获取当前设置
+function getOptions(){
+    var mc = document.getElementById("mdlClr").value;
+    var bc1 = document.getElementById("bckClr1").value;
+    var bc2 = document.getElementById("bckClr2").value;
+    var ren = document.getElementById("render").value;
+    var def = document.getElementById("defini").value;
+    return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, RenderMode: ren, Definition: def};
+}
+
+// 读取 STL 文件并显示在指定的 canvas 上
+function readSTLfile(opt, canvasId){
+    var canvas = document.getElementById(canvasId);
+    var viewer = new JSC3D.Viewer(canvas);
+    viewer.setParameter('SceneUrl', opt.SceneUrl);
+    viewer.setParameter('InitRotationX', 0);
+    viewer.setParameter('InitRotationY', 0);
+    viewer.setParameter('InitRotationZ', 0);
+    viewer.setParameter('ModelColor', opt.ModelColor);
+    viewer.setParameter('BackgroundColor1', opt.BackgroundColor1);
+    viewer.setParameter('BackgroundColor2', opt.BackgroundColor2);
+    viewer.setParameter('RenderMode', opt.RenderMode);
+    viewer.setParameter('Definition', opt.Definition);
+    viewer.init();
+    viewer.update();
+    viewers.push(viewer); // 保存 viewer 实例
+}
+
+// 修改选项时，更新所有视图
+function changeOption(strOpt, strValue){
+    console.log("change " + strOpt + " to " + strValue);
+    viewers.forEach(viewer => {
+        viewer.setParameter(strOpt, strValue);
+        viewer.init();
+        viewer.update();
+    });
+}
+
+// 动态生成 18 个 canvas 元素
+function createCanvases(num){
+    var modelsContainer = document.getElementById("models");
+    for (let i = 1; i <= num; i++) {
+        var canvas = document.createElement("canvas");
+        canvas.id = "cv" + i;
+        canvas.width = 400;
+        canvas.height = 300;
+        canvas.style.border = "1px solid";
+        modelsContainer.appendChild(canvas);
+    }
+}
+
+// 加载 STL 模型并显示
+function openByGet(){
+    var urls = [
+        "https://s104.cycu.org/~pj2023/cad2024_part_ex1_solvespace.stl",
+        "https://s104.cycu.org/~41223158/41223158_lesson2_solvespace.stl",
+        "https://s104.cycu.org/~41223158/1234_lesson3_solvespace.stl",
+        "https://s104.cycu.org/~41223158/123_lesson4_solvespace.stl",
+        "https://s104.cycu.org/~41223158/1357_lesson5_solvespace.stl",
+        "https://s104.cycu.org/~41223158/123456_lesson6_solvespace.stl",
+        "https://s104.cycu.org/~41223158/7_lesson7_solvespace.stl",
+        "https://s104.cycu.org/~41223158/8_lesson8_solvespace.stl",
+        "https://s104.cycu.org/~41223158/9_lesson9_solvespace.stl",
+        "https://s104.cycu.org/~41223158/10_lesson10_solvespace.stl",
+        "https://s104.cycu.org/~41223158/11_lesson11_solvespace.stl.stl",
+        "https://s104.cycu.org/~41223158/12_lesson12_solvespace.stl.stl",
+        "https://s104.cycu.org/~41223158/13_lesson13_solvespace.stl",
+        "https://s104.cycu.org/~41223158/14_lesson14_solvespace.stl",
+        "https://s104.cycu.org/~41223158/15_lesson15_solvespace.stl",
+        "https://s104.cycu.org/~41223158/16_lesson16_solvespace.stl",
+        "https://s104.cycu.org/~41223158/17_lesson17_solvespace.stl",
+        "https://s104.cycu.org/~41223158/18_lesson18_solvespace.stl"
+    ];
+    var opt = getOptions();
+    urls.forEach((url, index) => {
+        opt.SceneUrl = url;
+        readSTLfile(opt, 'cv' + (index + 1)); // 动态加载每个 canvas ID
+    });
+}
+
+// 初始化时创建 18 个 canvas 并加载模型
+createCanvases(18);
+openByGet();
+</script>
+</p>
+<p></p><br />w7 << <a href='w7.html'>Previous</a> <a href='HW3.html'>Next</a> >> HW3</div>
         
     <!-- footer -->
       <div class="container">
