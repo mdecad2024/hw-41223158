@@ -143,12 +143,20 @@ img.add_border {
         </header>
     <div id="tipue_search_content">HW1_Exam << <a href='HW1_Exam.html'>Previous</a> <a href='HW2.html'>Next</a> >> HW2<br /><h1>W10</h1>
 <h4>    題目一 : 1.<a href="./../downloads/1234_lesson3_solvespace.zip">/downloads/1234_lesson3_solvespace.zip</a></h4>
-<p>                 2.<a href="./../downloads/1234_lesson3_solvespace.stl">/downloads/1234_lesson3_solvespace.stl</a></p>
-<p>     <img alt="" height="275" src="./../images/chrome_BvnkRVN2p5.png" width="562"/><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/ZEKHKcH0uT8" width="560"></iframe></p>
+<h4>                 2.<a href="./../downloads/1234_lesson3_solvespace.stl">/downloads/1234_lesson3_solvespace.stl</a>  </h4>
+<p> <img alt="" height="273" src="./../images/chrome_BvnkRVN2p5.png" width="558"/><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/ZEKHKcH0uT8" width="560"></iframe></p>
 <p></p>
+<p></p>
+<h4></h4>
+<h4>題目三 : 1.<a href="./../downloads/19_lesson19_solvespace.7z">/downloads/19_lesson19_solvespace.7z</a></h4>
+<h4>              2.<a href="./../downloads/19_lesson19_solvespace.stl">/downloads/19_lesson19_solvespace.stl</a></h4>
+<p><img alt="" height="317" src="./../images/螢幕擷取畫面 2024-12-01 182447.png" width="559"/></p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/6S3Y_L78RLw" width="560"></iframe></p>
+<p></p>
+<h4>stl的零件圖 : </h4>
 <script src="./../cmsimde/static/jsc3d.js" type="text/javascript"></script>
-<p><canvas height="600" id="cv" style="border: 1px solid;" width="800"></canvas></p>
-<div style="width: 800px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
+<div id="models"><canvas height="300" id="cv1" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv2" style="border: 1px solid;" width="400"></canvas> <!-- 可以添加更多的 canvas --></div>
+<div style="width: 400px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
 <option>Flat</option>
 <option>Point</option>
 <option>Wireframe</option>
@@ -159,85 +167,65 @@ img.add_border {
 <option>high</option>
 </select></div>
 <script type="text/javascript">
-var viewer3d;
-    function getOptions(){
-        var mc = document.getElementById("mdlClr").value;
-        var bc1 = document.getElementById("bckClr1").value;
-        var bc2 = document.getElementById("bckClr2").value;
-        var ren = document.getElementById("render").value;
-        var def = document.getElementById("defini").value;
-        return {ModelColor: mc,
-                BackgroundColor1: bc1,
-                BackgroundColor2: bc2,
-                RenderMode: ren,
-                Definition: def};
-    }
-    function readSTLfile(opt){
-        var canvas = document.getElementById('cv');
-        viewer3d = new JSC3D.Viewer(canvas);
-        viewer3d.setParameter('SceneUrl', opt.SceneUrl);
-        viewer3d.setParameter('InitRotationX', 0);
-        viewer3d.setParameter('InitRotationY', 0);
-        viewer3d.setParameter('InitRotationZ', 0);
-        viewer3d.setParameter('ModelColor', opt.ModelColor);
-        viewer3d.setParameter('BackgroundColor1', opt.BackgroundColor1);
-        viewer3d.setParameter('BackgroundColor2', opt.BackgroundColor2);
-        viewer3d.setParameter('RenderMode', opt.RenderMode);
-        viewer3d.setParameter('Definition', opt.Definition);
-        viewer3d.init();
-        viewer3d.update();
-    }
-    function changeOption(strOpt,strValue){
+var viewers = [];
+
+function getOptions(){
+    var mc = document.getElementById("mdlClr").value;
+    var bc1 = document.getElementById("bckClr1").value;
+    var bc2 = document.getElementById("bckClr2").value;
+    var ren = document.getElementById("render").value;
+    var def = document.getElementById("defini").value;
+    return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, RenderMode: ren, Definition: def};
+}
+
+function readSTLfile(opt, canvasId){
+    var canvas = document.getElementById(canvasId);
+    var viewer = new JSC3D.Viewer(canvas);
+    viewer.setParameter('SceneUrl', opt.SceneUrl);
+    viewer.setParameter('InitRotationX', 0);
+    viewer.setParameter('InitRotationY', 0);
+    viewer.setParameter('InitRotationZ', 0);
+    viewer.setParameter('ModelColor', opt.ModelColor);
+    viewer.setParameter('BackgroundColor1', opt.BackgroundColor1);
+    viewer.setParameter('BackgroundColor2', opt.BackgroundColor2);
+    viewer.setParameter('RenderMode', opt.RenderMode);
+    viewer.setParameter('Definition', opt.Definition);
+    viewer.init();
+    viewer.update();
+    viewers.push(viewer); // 保存 viewer 實例
+}
+
+function changeOption(strOpt,strValue){
     console.log("change " + strOpt + " to " + strValue);
-        viewer3d.setParameter(strOpt, strValue);
-        viewer3d.init();
-        viewer3d.update();
-    }
-    function openByUrl(){
-        var url = document.getElementById("url").value;
-        var opt = getOptions();
-        opt.SceneUrl = document.getElementById("url").value;
-        readSTLfile(opt);
-    }
-    function openByPass(){
-        var pass = document.getElementById("url").value;
-        var opt = getOptions();
-        var fs = document.getElementById("pass").files;
-        var f = fs[0];
-        var reader = new FileReader();
-        reader.onload = (function(theFile) {
-            return function(e) {            
-                opt.SceneUrl = e.target.result;
-                console.log(opt.SceneUrl);
-                readSTLfile(opt);
-            };
-        })(f);
-        reader.readAsDataURL(f);
-    }
-    function openByGet(){
-        var url = "https://s104.cycu.org/~41223158/1234_lesson3_solvespace.stl";
-        var opt = getOptions();
+    viewers.forEach(viewer => {
+        viewer.setParameter(strOpt, strValue);
+        viewer.init();
+        viewer.update();
+    });
+}
+
+function openByUrl(){
+    var url = document.getElementById("url").value;
+    var opt = getOptions();
+    opt.SceneUrl = url;
+    // 可以添加更多的 STL URL
+    readSTLfile(opt, 'cv1'); // 為每個 canvas 調用
+    readSTLfile(opt, 'cv2'); // 第二個 canvas
+}
+
+function openByGet(){
+    var urls = [
+        "https://s104.cycu.org/~41223158/1234_lesson3_solvespace.stl",
+       "https://s104.cycu.org/~41223158/19_lesson19_solvespace.stl"
+    ];
+    var opt = getOptions();
+    urls.forEach((url, index) => {
         opt.SceneUrl = url;
-        readSTLfile(opt);
-    }
-    function GetQueryString(){
-        if( 1 < window.location.search.length )
-        {
-            var query = window.location.search.substring( 1 );
-            var parameters = query.split( '&' );
-            var result = new Object();
-            for( var i = 0; i < parameters.length; i++ )
-            {
-                var element = parameters[ i ].split( '=' );
-                var paramName = decodeURIComponent( element[ 0 ] );
-                var paramValue = decodeURIComponent( element[ 1 ] );
-                result[ paramName ] = decodeURIComponent( paramValue );
-            }
-            return result;
-        }
-        return null;
-    }
-    openByGet();
+        readSTLfile(opt, 'cv' + (index + 1)); // 動態生成 canvas ID
+    });
+}
+
+openByGet();
 </script><br />HW1_Exam << <a href='HW1_Exam.html'>Previous</a> <a href='HW2.html'>Next</a> >> HW2</div>
         
     <!-- footer -->

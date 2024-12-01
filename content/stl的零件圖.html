@@ -200,7 +200,7 @@ function changeOption(strOpt, strValue){
     });
 }
 
-// 动态生成 18 个 canvas 元素
+// 动态生成 19 个 canvas 元素
 function createCanvases(num){
     var modelsContainer = document.getElementById("models");
     for (let i = 1; i <= num; i++) {
@@ -233,7 +233,8 @@ function openByGet(){
         "https://s104.cycu.org/~41223158/15_lesson15_solvespace.stl",
         "https://s104.cycu.org/~41223158/16_lesson16_solvespace.stl",
         "https://s104.cycu.org/~41223158/17_lesson17_solvespace.stl",
-        "https://s104.cycu.org/~41223158/18_lesson18_solvespace.stl"
+        "https://s104.cycu.org/~41223158/18_lesson18_solvespace.stl",
+        "https://s104.cycu.org/~41223158/19_lesson19_solvespace.stl"  // 新增的第19个 STL 文件 URL
     ];
     var opt = getOptions();
     urls.forEach((url, index) => {
@@ -242,8 +243,8 @@ function openByGet(){
     });
 }
 
-// 初始化时创建 18 个 canvas 并加载模型
-createCanvases(18);
+// 初始化时创建 19 个 canvas 并加载模型
+createCanvases(19);
 openByGet();
 </script>
 </p>
