@@ -142,12 +142,15 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">練習影片 << <a href='練習影片.html'>Previous</a> <a href='coppeliaSim.html'>Next</a> >> coppeliaSim<br /><h1>stl的零件圖</h1>
-<p><span></span></p>
-<p>
 <script src="./../cmsimde/static/jsc3d.js" type="text/javascript"></script>
-</p>
-<div id="models"></div>
-<p><!-- 用来动态加载 canvas 的容器 --></p>
+<div id="models"><!-- 動態生成最多17個畫布 -->
+<script>
+        for (let i = 1; i <= 17; i++) {
+            document.write('<canvas height="300" id="cv' + i + '" style="border: 1px solid;" width="400"></canvas>');
+        }
+    
+</script>
+</div>
 <div style="width: 400px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
 <option>Flat</option>
 <option>Point</option>
@@ -158,11 +161,9 @@ img.add_border {
 <option>low</option>
 <option>high</option>
 </select></div>
-<p>
 <script type="text/javascript">
 var viewers = [];
 
-// 获取当前设置
 function getOptions(){
     var mc = document.getElementById("mdlClr").value;
     var bc1 = document.getElementById("bckClr1").value;
@@ -172,7 +173,6 @@ function getOptions(){
     return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, RenderMode: ren, Definition: def};
 }
 
-// 读取 STL 文件并显示在指定的 canvas 上
 function readSTLfile(opt, canvasId){
     var canvas = document.getElementById(canvasId);
     var viewer = new JSC3D.Viewer(canvas);
@@ -187,11 +187,10 @@ function readSTLfile(opt, canvasId){
     viewer.setParameter('Definition', opt.Definition);
     viewer.init();
     viewer.update();
-    viewers.push(viewer); // 保存 viewer 实例
+    viewers.push(viewer); // 保存 viewer 實例
 }
 
-// 修改选项时，更新所有视图
-function changeOption(strOpt, strValue){
+function changeOption(strOpt,strValue){
     console.log("change " + strOpt + " to " + strValue);
     viewers.forEach(viewer => {
         viewer.setParameter(strOpt, strValue);
@@ -200,25 +199,20 @@ function changeOption(strOpt, strValue){
     });
 }
 
-// 动态生成 19 个 canvas 元素
-function createCanvases(num){
-    var modelsContainer = document.getElementById("models");
-    for (let i = 1; i <= num; i++) {
-        var canvas = document.createElement("canvas");
-        canvas.id = "cv" + i;
-        canvas.width = 400;
-        canvas.height = 300;
-        canvas.style.border = "1px solid";
-        modelsContainer.appendChild(canvas);
+function openByUrl(){
+    var url = document.getElementById("url").value;
+    var opt = getOptions();
+    opt.SceneUrl = url;
+    // 可以添加更多的 STL URL
+    for (let i = 1; i <= 17; i++) {
+        readSTLfile(opt, 'cv' + i); // 為每個 canvas 調用
     }
 }
 
-// 加载 STL 模型并显示
 function openByGet(){
     var urls = [
         "https://s104.cycu.org/~pj2023/cad2024_part_ex1_solvespace.stl",
         "https://s104.cycu.org/~41223158/41223158_lesson2_solvespace.stl",
-        "https://s104.cycu.org/~41223158/1234_lesson3_solvespace.stl",
         "https://s104.cycu.org/~41223158/123_lesson4_solvespace.stl",
         "https://s104.cycu.org/~41223158/1357_lesson5_solvespace.stl",
         "https://s104.cycu.org/~41223158/123456_lesson6_solvespace.stl",
@@ -233,21 +227,18 @@ function openByGet(){
         "https://s104.cycu.org/~41223158/15_lesson15_solvespace.stl",
         "https://s104.cycu.org/~41223158/16_lesson16_solvespace.stl",
         "https://s104.cycu.org/~41223158/17_lesson17_solvespace.stl",
-        "https://s104.cycu.org/~41223158/18_lesson18_solvespace.stl",
-        "https://s104.cycu.org/~41223158/19_lesson19_solvespace.stl"  // 新增的第19个 STL 文件 URL
+        "https://s104.cycu.org/~41223158/18_lesson18_solvespace.stl"
     ];
+    
     var opt = getOptions();
     urls.forEach((url, index) => {
         opt.SceneUrl = url;
-        readSTLfile(opt, 'cv' + (index + 1)); // 动态加载每个 canvas ID
+        readSTLfile(opt, 'cv' + (index + 1)); // 動態生成 canvas ID
     });
 }
 
-// 初始化时创建 19 个 canvas 并加载模型
-createCanvases(19);
 openByGet();
 </script>
-</p>
 <h4><span style="background-color: #99cc00;">請幫我滑到coppeliaSim圖</span></h4><br />練習影片 << <a href='練習影片.html'>Previous</a> <a href='coppeliaSim.html'>Next</a> >> coppeliaSim</div>
         
     <!-- footer -->
