@@ -343,10 +343,10 @@ var viewer3d;
 <p></p>
 <p><span><span style="background-color: #ff9900;">solvespace下載</span> : <a href="/downloads/w11全部的零件繪製.7z">/downloads/w11全部的零件繪製.7z</a></span></p>
 <p><span></span></p>
-<p><span><span style="background-color: #ff9900;">stl零件下載</span> :<a href="/downloads/w11全部的零件繪製.stl.zip">/downloads/w11全部的零件繪製.stl.zip</a></span></p>
-<p>(3)STL Viewer</p>
+<p><span><span style="background-color: #ff9900;">stl零件下載</span> :<a href="/downloads/w11全部的零件繪製.stl.zip">/downloads/w11全部的零件繪製.stl.zip</a>
 <script src="/static/jsc3d.js" type="text/javascript"></script>
-<div id="models"><!-- 11 個 canvas 元素，用來顯示不同的 STL 模型 --> <canvas height="300" id="cv1" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv2" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv3" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv4" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv5" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv6" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv7" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv8" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv9" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv10" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv11" style="border: 1px solid;" width="400"></canvas></div>
+</span></p>
+<div id="models"><!-- 增加 10 个 canvas 元素 --> <canvas height="300" id="cv1" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv2" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv3" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv4" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv5" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv6" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv7" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv8" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv9" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv10" style="border: 1px solid;" width="400"></canvas></div>
 <div style="width: 400px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
 <option>Flat</option>
 <option>Point</option>
@@ -357,80 +357,82 @@ var viewer3d;
 <option>low</option>
 <option>high</option>
 </select></div>
+<p><span>
 <script type="text/javascript">
 var viewers = [];
 
-    function getOptions(){
-        var mc = document.getElementById("mdlClr").value;
-        var bc1 = document.getElementById("bckClr1").value;
-        var bc2 = document.getElementById("bckClr2").value;
-        var ren = document.getElementById("render").value;
-        var def = document.getElementById("defini").value;
-        return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, RenderMode: ren, Definition: def};
-    }
+function getOptions(){
+    var mc = document.getElementById("mdlClr").value;
+    var bc1 = document.getElementById("bckClr1").value;
+    var bc2 = document.getElementById("bckClr2").value;
+    var ren = document.getElementById("render").value;
+    var def = document.getElementById("defini").value;
+    return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, RenderMode: ren, Definition: def};
+}
 
-    function readSTLfile(opt, canvasId){
-        var canvas = document.getElementById(canvasId);
-        var viewer = new JSC3D.Viewer(canvas);
-        viewer.setParameter('SceneUrl', opt.SceneUrl);
-        viewer.setParameter('InitRotationX', 0);
-        viewer.setParameter('InitRotationY', 0);
-        viewer.setParameter('InitRotationZ', 0);
-        viewer.setParameter('ModelColor', opt.ModelColor);
-        viewer.setParameter('BackgroundColor1', opt.BackgroundColor1);
-        viewer.setParameter('BackgroundColor2', opt.BackgroundColor2);
-        viewer.setParameter('RenderMode', opt.RenderMode);
-        viewer.setParameter('Definition', opt.Definition);
+function readSTLfile(opt, canvasId){
+    var canvas = document.getElementById(canvasId);
+    var viewer = new JSC3D.Viewer(canvas);
+    viewer.setParameter('SceneUrl', opt.SceneUrl);
+    viewer.setParameter('InitRotationX', 0);
+    viewer.setParameter('InitRotationY', 0);
+    viewer.setParameter('InitRotationZ', 0);
+    viewer.setParameter('ModelColor', opt.ModelColor);
+    viewer.setParameter('BackgroundColor1', opt.BackgroundColor1);
+    viewer.setParameter('BackgroundColor2', opt.BackgroundColor2);
+    viewer.setParameter('RenderMode', opt.RenderMode);
+    viewer.setParameter('Definition', opt.Definition);
+    viewer.init();
+    viewer.update();
+    viewers.push(viewer); // 保存 viewer 实例
+}
+
+function changeOption(strOpt, strValue){
+    console.log("change " + strOpt + " to " + strValue);
+    viewers.forEach(viewer => {
+        viewer.setParameter(strOpt, strValue);
         viewer.init();
         viewer.update();
-        viewers.push(viewer); // 保存 viewer 實例
-    }
+    });
+}
 
-    function changeOption(strOpt,strValue){
-        console.log("change " + strOpt + " to " + strValue);
-        viewers.forEach(viewer => {
-            viewer.setParameter(strOpt, strValue);
-            viewer.init();
-            viewer.update();
-        });
+function openByUrl(){
+    var url = document.getElementById("url").value;
+    var opt = getOptions();
+    opt.SceneUrl = url;
+    // 为每个 canvas 调用
+    for (let i = 1; i <= 10; i++) {
+        readSTLfile(opt, 'cv' + i); // 动态生成 canvas ID
     }
+}
 
-    function openByUrl(){
-        var url = document.getElementById("url").value;
-        var opt = getOptions();
-        opt.SceneUrl = url;
-        // 可以添加更多的 STL URL
-        for (let i = 1; i <= 11; i++) {
-            readSTLfile(opt, 'cv' + i); // 動態生成 canvas ID
-        }
-    }
-
-    function openByGet(){
-        var urls = [
-            "https://s104.cycu.org/~41223158/20_lesson20_solvespace.stl",
-            "https://s104.cycu.org/~41223158/21_lesson21_solvespace.stl",
-            "https://s104.cycu.org/~41223158/22_lesson22_solvespace.stl",
-            "https://s104.cycu.org/~41223158/23_lesson23_solvespace.stl",
-            "https://s104.cycu.org/~41223158/24_lesson24_solvespace.stl",
-            "https://s104.cycu.org/~41223158/25_lesson25_solvespace.stl",
-            "https://s104.cycu.org/~41223158/26_lesson26_solvespace.stl",
-            "https://s104.cycu.org/~41223158/27_lesson27_solvespace.stl",
-            "https://s104.cycu.org/~41223158/28_lesson28_solvespace.stl",
-            "https://s104.cycu.org/~41223158/29_lesson29_solvespace.stl",
-            "https://s104.cycu.org/~41223158/30_lesson30_solvespace.stl"
-        ];
-        var opt = getOptions();
-        urls.forEach((url, index) => {
+function openByGet(){
+    var urls = [
+        "https://s104.cycu.org/~41223158/20_lesson20_solvespace.stl",
+        "https://s104.cycu.org/~41223158/21_lesson21_solvespace.stl",
+        "https://s104.cycu.org/~41223158/22_lesson22_solvespace.stl", 
+        "https://s104.cycu.org/~41223158/34_lesson34_solvespace.stl",
+        "https://s104.cycu.org/~41223158/26_lesson26_solvespace.stl",
+        "https://s104.cycu.org/~41223158/27_lesson27_solvespace.stl",
+        "https://s104.cycu.org/~41223158/28_lesson28_solvespace.stl",
+        "https://s104.cycu.org/~41223158/29_lesson29_solvespace.stl",
+        "https://s104.cycu.org/~41223158/30_lesson30_solvespace.stl",
+        "https://s104.cycu.org/~41223158/25_lesson25_solvespace.stl"  // 添加的新 STL 文件链接
+    ];
+    var opt = getOptions();
+    urls.forEach((url, index) => {
+        if (index < 10) { // 确保最多加载10个模型
             opt.SceneUrl = url;
-            readSTLfile(opt, 'cv' + (index + 1)); // 動態生成 canvas ID
-        });
-    }
+            readSTLfile(opt, 'cv' + (index + 1)); // 动态生成 canvas ID
+        }
+    });
+}
 
-    openByGet(); // 加載 11 個模型
+openByGet();
 </script>
+</span></p>
 <p></p>
-<p><span style="background-color: #ff9900;">幫我翻到組裝w11的零件</span></p>
-<h4></h4><h3>組裝w11的零件</h3>
+<p><span style="background-color: #ff9900;">幫我翻到組裝w11的零件</span></p><h3>組裝w11的零件</h3>
 <p><span style="background-color: #ff9900;">2.solvespace零件組裝及coppeliaSim零件模擬</span></p>
 <p><span style="background-color: #ff9900;">(1)solvespace零件組裝</span></p>
 <p><img alt="" height="278" src="/images/螢幕擷取畫面 2024-12-09 145749.png" width="514"/></p>
@@ -538,12 +540,11 @@ var viewer3d;
         return null;
     }
     openByGet();
-</script><h2>w12_hw</h2>
+</script><h2>w12_cw</h2>
 <p>本週抽查<span style="background-color: #99cc00;">w7、w10、w11_hw</span> 頁面完成進度</p>
 <p>下周需完成<span>組合零件</span>及嘗試<span>以<span style="background-color: #99cc00;">solvespace組立</span></span><span style="background-color: #99cc00;">零件</span></p>
 <p><span style="background-color: #99cc00;"></span></p>
-<p></p>
-<h2>w13_hw</h2>
+<p></p><h2>w13_hw</h2>
 <p><span>本週會提到的使用NX組配及coppeliaSim 嘗試使零件轉動</span></p>
 <p><span>在第13週用solvespace組裝及模擬CoppeliaSim的零件，並放置在組裝w11的零件裡面。</span></p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/EPbET4aRrPo" width="560"></iframe></p>
