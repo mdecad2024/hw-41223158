@@ -141,85 +141,27 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">Attendance << <a href='Attendance.html'>Previous</a> <a href='w2.html'>Next</a> >> w2<br /><h1>w1</h1>
-<p>1.介紹網站及使用方式</p>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/U8wbLiC7ynI" width="560"></iframe></p>
-<p>2.個人維護網站<br/> <iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/ZMlov8CwH80" width="560"></iframe></p>
-<script src="./../cmsimde/static/jsc3d.js" type="text/javascript"></script>
-<div id="models"><canvas height="300" id="cv1" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv2" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv3" style="border: 1px solid;" width="400"></canvas> <!-- Added third canvas --></div>
-<div style="width: 400px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
-<option>Flat</option>
-<option>Point</option>
-<option>Wireframe</option>
-<option>Smooth</option>
-</select>Definition:<select id="defini" onchange="changeOption('Definition',this.value)">
-<option>Standard</option>
-<option>low</option>
-<option>high</option>
-</select></div>
-<script type="text/javascript">
-var viewers = [];
-
-function getOptions(){
-    var mc = document.getElementById("mdlClr").value;
-    var bc1 = document.getElementById("bckClr1").value;
-    var bc2 = document.getElementById("bckClr2").value;
-    var ren = document.getElementById("render").value;
-    var def = document.getElementById("defini").value;
-    return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, RenderMode: ren, Definition: def};
-}
-
-function readSTLfile(opt, canvasId){
-    var canvas = document.getElementById(canvasId);
-    var viewer = new JSC3D.Viewer(canvas);
-    viewer.setParameter('SceneUrl', opt.SceneUrl);
-    viewer.setParameter('InitRotationX', 0);
-    viewer.setParameter('InitRotationY', 0);
-    viewer.setParameter('InitRotationZ', 0);
-    viewer.setParameter('ModelColor', opt.ModelColor);
-    viewer.setParameter('BackgroundColor1', opt.BackgroundColor1);
-    viewer.setParameter('BackgroundColor2', opt.BackgroundColor2);
-    viewer.setParameter('RenderMode', opt.RenderMode);
-    viewer.setParameter('Definition', opt.Definition);
-    viewer.init();
-    viewer.update();
-    viewers.push(viewer); // Save viewer instance
-}
-
-function changeOption(strOpt,strValue){
-    console.log("change " + strOpt + " to " + strValue);
-    viewers.forEach(viewer => {
-        viewer.setParameter(strOpt, strValue);
-        viewer.init();
-        viewer.update();
-    });
-}
-
-function openByUrl(){
-    var url = document.getElementById("url").value;
-    var opt = getOptions();
-    opt.SceneUrl = url;
-    // Add more STL URLs if needed
-    readSTLfile(opt, 'cv1'); // Load model into the first canvas
-    readSTLfile(opt, 'cv2'); // Load model into the second canvas
-    readSTLfile(opt, 'cv3'); // Load model into the third canvas
-}
-
-function openByGet(){
-    var urls = [
-        "https://s104.cycu.org/~pj2023/cad2024_part_ex1_solvespace.stl",
-        "https://s104.cycu.org/~scrum1/41223199_part99.stl",
-        "https://s104.cycu.org/~41223158/33_lesson33_solvespace.stl"  // Third model URL
-    ];
-    var opt = getOptions();
-    urls.forEach((url, index) => {
-        opt.SceneUrl = url;
-        readSTLfile(opt, 'cv' + (index + 1)); // Dynamically assign canvas ID
-    });
-}
-
-openByGet(); // Automatically load models when the page loads
-</script><br />Attendance << <a href='Attendance.html'>Previous</a> <a href='w2.html'>Next</a> >> w2</div>
+    <div id="tipue_search_content">w13_hw << <a href='w13_hw.html'>Previous</a> <a href='練習圖影片.html'>Next</a> >> 練習圖影片<br /><h1>w14</h1>
+<h4><span style="background-color: #ff9900;">Pinball</span></h4>
+<p><a href="https://mde.tw/cad2024/downloads/flipper_nx2312.7z">flipper_nx2312.7z</a><span> </span>(請各組利用 Solvespace 與 NX2312 繪製零組件並轉入 CoppeliaSim 進行動態模擬)</p>
+<p><a href="https://mde.tw/cad2024/downloads/pinball/flipper_in_solvespace.7z">flipper_in_solvespace.7z</a></p>
+<p><a href="https://mde.tw/cad2024/downloads/flipper_in_solvespace_final.7z">flipper_in_solvespace_final.7z</a></p>
+<p><a href="https://mde.tw/cad2024/downloads/flipper_in_solvespace_cw_and_ccw.7z">flipper_in_solvespace_cw_and_ccw.7z</a></p>
+<p><a href="https://mde.tw/cad2024/downloads/flipper_in_solvespace_cw_and_ccw_w14.7z">flipper_in_solvespace_cw_and_ccw_w14.7z</a></p>
+<p><a href="https://mde.tw/cad2024/downloads/pinball_cad2024.7z">pinball_cad2024.7z</a></p>
+<p><span style="background-color: #ff9900;">(1) 畫圖心得與組員的狀況 : </span></p>
+<p>      我的畫圖心得感想是再遇到不會的時候，都是看同學的及自由發揮比較多，雖然沒有別組那麼團結完成，也沒有組員有人帶，但是我的想法就是一步一步慢慢來，畫圖時也是出了很多的誤差來更改，並自己組裝起來，不會就是看著別組來自己研究。</p>
+<p>      我主要全部都我負責，隊友<span>41223157</span>進度不行無法帶，就是我在做的時候，看到他的狀況不是很好，他假日也不知道在幹嘛，而且他的態度讓我的感覺是心沒有在電輔方面，還請老師見諒。</p>
+<h4><span style="background-color: #ff9900;">Pinball組合及模擬</span></h4>
+<h4><span style="background-color: #ff9900;">1.solvespace組合及零件 </span></h4>
+<p><img alt="" height="289" src="./../images/solvespace_XnoSJiDbCt.png" width="534"/></p>
+<p>(1)solvespace組合及零件下載檔案 :</p>
+<p>       <a href="./../downloads/flipper_in_solvespace_cw_and_ccw_w14 41223158.7z">/downloads/flipper_in_solvespace_cw_and_ccw_w14 41223158.7z</a></p>
+<p><span>(2)stl組合下載檔案 : </span></p>
+<p><span>      <a href="./../downloads/slider_project_v1.stl">/downloads/slider_project_v1.stl</a></span></p>
+<p><span></span></p>
+<h4><span style="background-color: #ff9900;">2.coppeliaSim組合零件模擬</span></h4>
+<p><span><img alt="" height="310" src="./../images/螢幕擷取畫面 2024-12-08 205318.png" width="525"/></span></p><br />w13_hw << <a href='w13_hw.html'>Previous</a> <a href='練習圖影片.html'>Next</a> >> 練習圖影片</div>
         
     <!-- footer -->
       <div class="container">
