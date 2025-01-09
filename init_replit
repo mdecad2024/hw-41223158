@@ -2,6 +2,7 @@
 
 # Update Git submodules
 pip install flask flask_cors bs4 lxml pelican markdown gevent
+
 # pyInstall Python packages using pippip install flask flask_cors bs4 lxml pelican markdown gevent
 
 
